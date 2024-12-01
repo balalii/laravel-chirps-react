@@ -8,6 +8,7 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class ChirpController extends Controller
 {
@@ -32,16 +33,30 @@ class ChirpController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
-        {
-            $validated = $request->validate([
-                'message' => 'required|string',
+     public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'message' => 'required|string',
+            'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov|max:10240',
+        ]);
+
+        $chirp = $request->user()->chirps()->create([
+            'message' => $validated['message']
+        ]);
+
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('chirp-media', $filename, 'public');
+
+            $chirp->update([
+                'media_path' => $path,
+                'media_type' => $file->getMimeType()
             ]);
-
-            $request->user()->chirps()->create($validated);
-
-            return redirect(route('chirps.index'));
         }
+
+        return redirect(route('chirps.index'));
+    }
 
     /**
      * Display the specified resource.
@@ -62,7 +77,7 @@ class ChirpController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chirp $chirp): RedirectResponse
+ public function update(Request $request, Chirp $chirp): RedirectResponse
     {
         Gate::authorize('update', $chirp);
 
@@ -75,13 +90,17 @@ class ChirpController extends Controller
 
         return redirect(route('chirps.index'));
     }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Chirp $chirp): RedirectResponse
+  public function destroy(Chirp $chirp): RedirectResponse
     {
         Gate::authorize('delete', $chirp);
+
+        // Delete media jika ada
+        if ($chirp->media_path) {
+            Storage::disk('public')->delete($chirp->media_path);
+        }
 
         $chirp->delete();
 
