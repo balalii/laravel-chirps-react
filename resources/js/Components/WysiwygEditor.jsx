@@ -8,7 +8,7 @@ const WysiwygEditor = ({ value, onChange }) => {
       value={value}
       onChange={onChange}
       theme="snow"
-      className="my-4"
+      className="my-4  !border-red-500"
     />
   );
 };

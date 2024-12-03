@@ -60,10 +60,13 @@ export default function Index({ auth, chirps }) {
  
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <form onSubmit={submit}>
-                    <WysiwygEditor 
+                 <div className='p-3 bg-white rounded-md'>
+                    <p>Caption:</p>
+                       <WysiwygEditor 
                         value={data.message} 
                         onChange={(value) => setData('message', value)} 
                     />
+                 </div>
                     <InputError message={errors.message} className="mt-2" />
                     
                     {/* Input File */}
@@ -76,9 +79,9 @@ export default function Index({ auth, chirps }) {
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border
                             file:text-sm file:font-semibold
-                            file:bg-blue-50 file:text-blue-700
-                            file:border-blue-700
-                            hover:file:bg-blue-100"
+                            file:bg-green-50 file:text-green-700
+                            file:border-green-700
+                            hover:file:bg-green-100"
                         />
                     </div>
 
