@@ -43,7 +43,7 @@ class ChirpPolicy
     public function update(User $user, Chirp $chirp): bool
     {
         // Only allow the owner of the chirp to update it
-           return $chirp->user_id === $user->id;
+        return $chirp->user_id === $user->id;
     }
 
     /**
@@ -52,7 +52,7 @@ class ChirpPolicy
     public function delete(User $user, Chirp $chirp): bool
     {
         // Only allow the owner of the chirp to delete it
-        return $this->update($user, $chirp);
+        return $this->update($user, $chirp) || $user->role === 'admin';
     }
 
     /**
