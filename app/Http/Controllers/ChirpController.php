@@ -33,7 +33,7 @@ class ChirpController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-     public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'message' => 'required|string',
@@ -77,13 +77,13 @@ class ChirpController extends Controller
     /**
      * Update the specified resource in storage.
      */
- public function update(Request $request, Chirp $chirp): RedirectResponse
+    public function update(Request $request, Chirp $chirp): RedirectResponse
     {
         Gate::authorize('update', $chirp);
 
-         $validated = $request->validate([
-                'message' => 'required|string',
-            ]);
+        $validated = $request->validate([
+            'message' => 'required|string',
+        ]);
 
 
         $chirp->update($validated);
@@ -93,7 +93,7 @@ class ChirpController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-  public function destroy(Chirp $chirp): RedirectResponse
+    public function destroy(Chirp $chirp): RedirectResponse
     {
         Gate::authorize('delete', $chirp);
 
