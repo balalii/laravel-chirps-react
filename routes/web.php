@@ -6,6 +6,7 @@ use App\Http\Controllers\ChirpManagerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagerController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +37,7 @@ Route::resource('dashboard', DashboardController::class)
 
 Route::prefix('dashboard/admin')
     ->name("dashboard.admin.")
+    ->middleware(['auth', 'verified', AdminMiddleware::class])
     ->group(function () {
         Route::resource('users', UserManagerController::class)
             ->only(['index', 'update', 'destroy']);
