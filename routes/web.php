@@ -35,7 +35,7 @@ Route::resource('dashboard', DashboardController::class)
     ->name('index', 'dashboard');
 
 Route::prefix('dashboard/admin')
-    ->name("dashboard.")
+    ->name("dashboard.admin.")
     ->group(function () {
         Route::resource('users', UserManagerController::class)
             ->only(['index', 'update', 'destroy']);
