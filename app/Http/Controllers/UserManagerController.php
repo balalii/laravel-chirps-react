@@ -37,7 +37,7 @@ class UserManagerController extends Controller
             ]
         );
         $user->update($attributes);
-        return redirect(route('dashboard.users.index'));
+        return redirect(route('dashboard.admin.users.index'));
     }
 
     /**
@@ -47,6 +47,6 @@ class UserManagerController extends Controller
     {
         Gate::authorize('update', $request->user());
         $user->delete();
-        return redirect(route('dashboard.users.index'));
+        return redirect(route('dashboard.admin.users.index'));
     }
 }

@@ -25,6 +25,6 @@ class ChirpManagerController extends Controller
         Gate::authorize('update', $chirp);
         $chirp->delete();
 
-        return redirect(route('dashboard.chirps.index'));
+        return redirect(route('dashboard.admin.chirps.index'));
     }
 }

@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->role == 'user') {
+        if ($request->user()->role === 'admin') {
             // F-04
             return Inertia::render('Dashboard', ['users' => User::all()->all(), 'chirps' => Chirp::all()->all()]);
         }
