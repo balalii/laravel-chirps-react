@@ -15,12 +15,11 @@ class UserManagerController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Dashboard", [
+        return Inertia::render("Users", [
             'users' => User::with('chirps')
                 ->get()
-                ->filter(function ($user) {
-                    return $user->role !== 'admin';
-                })
+                ->filter()
+                ->all()
         ]);
     }
 

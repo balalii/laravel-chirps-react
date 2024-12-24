@@ -14,7 +14,7 @@ class ChirpManagerController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Dashboard", ['chirps' => Chirp::with('user')->get()]);
+        return Inertia::render("Dashboard", ['chirps' => Chirp::with('user')->get()->all()]);
     }
 
     /**
