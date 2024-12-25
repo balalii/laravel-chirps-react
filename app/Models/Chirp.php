@@ -11,8 +11,9 @@ class Chirp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'message', 
-        'media_path', 
+        'message',
+        'marked',
+        'media_path',
         'media_type'
     ];
 
