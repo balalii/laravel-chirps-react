@@ -1,54 +1,48 @@
-import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
-import { Table, Button, Modal } from "flowbite-react";
+import { Table, Button, Modal, TextInput, Select, Alert } from "flowbite-react";
+import { AlertCircle, Edit, Trash } from "lucide-react";
 
 export default function Users({ auth, users }) {
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [userToDelete, setUserToDelete] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const {
         data,
         setData,
-        put,
+        patch,
         delete: destroy,
         processing,
         reset,
+        errors,
     } = useForm({
         role: "",
         status: "",
     });
 
-    const updateUser = (user) => {
-        setData({
-            role: user.role,
-            status: user.status,
-        });
-        put(route("dashboard.admin.users.update", user.id), {
-            preserveState: true,
+    const handleEdit = (user) => {
+        setSelectedUser(user);
+        setData({ role: user.role, status: user.status });
+        setShowModal(true);
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        patch(route("dashboard.admin.users.update", selectedUser.id), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                setShowModal(false);
+                reset();
+            },
         });
     };
 
-    const confirmDelete = (user) => {
-        setUserToDelete(user);
-        setDeleteModalOpen(true);
-    };
-
-    const deleteUser = () => {
-        if (userToDelete) {
-            destroy(route("dashboard.admin.users.destroy", userToDelete.id), {
-                preserveState: true,
-                preserveScroll: true,
-                onSuccess: () => {
-                    setDeleteModalOpen(false);
-                    setUserToDelete(null);
-                },
-            });
+    const handleDelete = (userId) => {
+        if (confirm("Are you sure you want to delete this user?")) {
+            destroy(route("dashboard.admin.users.destroy", userId));
         }
     };
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -58,22 +52,37 @@ export default function Users({ auth, users }) {
                 </h2>
             }
         >
-            <Head title="User Management" />
+            <Head title="Dashboard User" />
 
             <div className="py-12">
+                <Head title="Dashboard User" />
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <Table.Head>
-                                <Table.HeadCell>Name</Table.HeadCell>
-                                <Table.HeadCell>Email</Table.HeadCell>
-                                <Table.HeadCell>Chirps Count</Table.HeadCell>
-                                <Table.HeadCell>Role</Table.HeadCell>
-                                <Table.HeadCell>Status</Table.HeadCell>
-                                <Table.HeadCell>Actions</Table.HeadCell>
-                            </Table.Head>
-                            <Table.Body className="divide-y">
-                                {users.map((user) => (
+                    {errors.unauthorized && (
+                        <Alert
+                            color="failure"
+                            icon={AlertCircle}
+                            className="mb-6"
+                        >
+                            <span className="font-medium">Unauthorized!</span>{" "}
+                            {errors.unauthorized}
+                        </Alert>
+                    )}
+
+                    <Table striped>
+                        <Table.Head>
+                            <Table.HeadCell>Name</Table.HeadCell>
+                            <Table.HeadCell>Email</Table.HeadCell>
+                            <Table.HeadCell>Role</Table.HeadCell>
+                            <Table.HeadCell>Chirps Count</Table.HeadCell>
+                            <Table.HeadCell>Status</Table.HeadCell>
+                            <Table.HeadCell>Actions</Table.HeadCell>
+                        </Table.Head>
+                        <Table.Body className="divide-y">
+                            {users
+                                .filter(
+                                    (user) => user.email !== auth.user.email
+                                )
+                                .map((user) => (
                                     <Table.Row
                                         key={user.id}
                                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -85,105 +94,101 @@ export default function Users({ auth, users }) {
                                         <Table.Cell>
                                             {user.chirps.length}
                                         </Table.Cell>
+                                        <Table.Cell>{user.role}</Table.Cell>
                                         <Table.Cell>
-                                            <select
-                                                disabled={
-                                                    user.email ===
-                                                    auth.user.email
-                                                }
-                                                value={user.role}
-                                                onChange={(e) =>
-                                                    updateUser({
-                                                        ...user,
-                                                        role: e.target.value,
-                                                    })
-                                                }
-                                                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer ${
-                                                    user.email ===
-                                                        auth.user.email &&
-                                                    "!cursor-not-allowed"
+                                            <span
+                                                className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                                    user.status === "active"
+                                                        ? "bg-green-100 text-green-800"
+                                                        : "bg-red-100 text-red-800"
                                                 }`}
                                             >
-                                                <option value="user">
-                                                    User
-                                                </option>
-                                                <option value="moderator">
-                                                    Moderator
-                                                </option>
-                                            </select>
+                                                {user.status}
+                                            </span>
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <select
-                                                disabled={
-                                                    user.email ===
-                                                    auth.user.email
-                                                }
-                                                value={user.status}
-                                                onChange={(e) =>
-                                                    updateUser({
-                                                        ...user,
-                                                        status: e.target.value,
-                                                    })
-                                                }
-                                                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer ${
-                                                    user.email ===
-                                                        auth.user.email &&
-                                                    "!cursor-not-allowed"
-                                                }`}
-                                            >
-                                                <option value="active">
-                                                    Active
-                                                </option>
-                                                <option value="banned">
-                                                    Banned
-                                                </option>
-                                            </select>
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {user.email !== auth.user.email && (
+                                            <div className="flex space-x-2">
                                                 <Button
-                                                    color="failure"
+                                                    color="info"
+                                                    size="sm"
                                                     onClick={() =>
-                                                        confirmDelete(user)
+                                                        handleEdit(user)
                                                     }
                                                 >
+                                                    <Edit className="mr-2 h-4 w-4" />
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    color="failure"
+                                                    size="sm"
+                                                    onClick={() =>
+                                                        handleDelete(user.id)
+                                                    }
+                                                >
+                                                    <Trash className="mr-2 h-4 w-4" />
                                                     Delete
                                                 </Button>
-                                            )}
+                                            </div>
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}
-                            </Table.Body>
-                        </Table>
-                    </div>
+                        </Table.Body>
+                    </Table>
                 </div>
-            </div>
 
-            <Modal
-                show={deleteModalOpen}
-                onClose={() => setDeleteModalOpen(false)}
-            >
-                <Modal.Header>Confirm Deletion</Modal.Header>
-                <Modal.Body>
-                    <div className="space-y-6">
-                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            Are you sure you want to delete this user? This
-                            action cannot be undone.
-                        </p>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button color="failure" onClick={deleteUser}>
-                        Delete
-                    </Button>
-                    <Button
-                        color="gray"
-                        onClick={() => setDeleteModalOpen(false)}
-                    >
-                        Cancel
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                <Modal show={showModal} onClose={() => setShowModal(false)}>
+                    <Modal.Header>Edit User</Modal.Header>
+                    <Modal.Body>
+                        <form onSubmit={handleUpdate} className="space-y-5">
+                            <div className="grid grid-cols-4 space-x-5">
+                                <div className="col-span-2">
+                                    <label
+                                        htmlFor="role"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Role
+                                    </label>
+                                    <Select
+                                        id="role"
+                                        value={data.role}
+                                        onChange={(e) =>
+                                            setData("role", e.target.value)
+                                        }
+                                        required
+                                    >
+                                        <option value="user">User</option>
+                                        <option value="moderator">
+                                            Moderator
+                                        </option>
+                                    </Select>
+                                </div>
+                                <div className="col-span-2">
+                                    <label
+                                        htmlFor="status"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Status
+                                    </label>
+                                    <Select
+                                        id="status"
+                                        value={data.status}
+                                        onChange={(e) =>
+                                            setData("status", e.target.value)
+                                        }
+                                        required
+                                    >
+                                        <option value="active">Active</option>
+                                        <option value="banned">Banned</option>
+                                    </Select>
+                                </div>
+                            </div>
+                            <Button type="submit" disabled={processing}>
+                                Update User
+                            </Button>
+                        </form>
+                    </Modal.Body>
+                </Modal>
+            </div>
         </AuthenticatedLayout>
     );
 }
