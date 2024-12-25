@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Chirp;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,11 @@ Route::prefix('dashboard/admin')
             ->only(['index', 'update', 'destroy']);
         Route::resource('chirps', ChirpManagerController::class)
             ->only(['index', 'destroy']);
+        Route::put("/admin/chirps/mark", function (Chirp $chirp) {
+            $chirp->delete();
+            redirect("chirps");
+        })
+            ->name("chirps.mark");
     });
 
 require __DIR__ . '/auth.php';

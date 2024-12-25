@@ -10,6 +10,8 @@ import WysiwygEditor from './WysiwygEditor';
 dayjs.extend(relativeTime);
 
 export default function Chirp({ chirp }) {
+    console.log(chirp);
+    
         const { auth } = usePage().props;
 
     const [editing, setEditing] = useState(false);
@@ -66,7 +68,7 @@ export default function Chirp({ chirp }) {
                         <small className="ml-2 text-sm text-gray-600">{dayjs(chirp.created_at).fromNow()}</small>
                         {chirp.created_at !== chirp.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
                     </div>
-                    {chirp.user.id === auth.user.id && (
+                    {chirp.user.id === auth.user.id || auth.user.role == 'admin' && (
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <button>
