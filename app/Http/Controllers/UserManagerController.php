@@ -28,7 +28,7 @@ class UserManagerController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        Gate::authorize('update', $request->user());
+        Gate::authorize('is-admin', $request->user());
         $attributes = $request->validate(
             [
                 'role' => [Rule::in(['moderator', 'user'])],
@@ -44,7 +44,7 @@ class UserManagerController extends Controller
      */
     public function destroy(Request $request, User $user)
     {
-        Gate::authorize('update', $request->user());
+        Gate::authorize('is-admin', $request->user());
         $user->delete();
         return redirect(route('dashboard.admin.users.index'));
     }
