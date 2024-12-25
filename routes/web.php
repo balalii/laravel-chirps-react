@@ -43,12 +43,7 @@ Route::prefix('dashboard/admin')
         Route::resource('users', UserManagerController::class)
             ->only(['index', 'update', 'destroy']);
         Route::resource('chirps', ChirpManagerController::class)
-            ->only(['index', 'destroy']);
-        Route::put("/admin/chirps/mark", function (Chirp $chirp) {
-            $chirp->delete();
-            redirect("chirps");
-        })
-            ->name("chirps.mark");
+            ->only(['index', 'destroy', 'update']);
     });
 
 require __DIR__ . '/auth.php';

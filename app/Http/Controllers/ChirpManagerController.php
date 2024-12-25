@@ -17,15 +17,23 @@ class ChirpManagerController extends Controller
         return Inertia::render("ChripsManagement/Index", ['chirps' => Chirp::with('user')->get()->all()]);
     }
 
+    public function update(Request $request, Chirp $chirp)
+    {
+        Gate::authorize('is-admin', $request->user());
+        $chirp->update(
+            ['marked' => !$chirp->marked]
+        );
+        return redirect(route('dashboard.admin.chirps.index'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, Chirp $chirp)
     {
-        Gate::authorize('update', $chirp);
+        Gate::authorize('is-admin', $request->user());
         $chirp->delete();
 
         return redirect(route('dashboard.admin.chirps.index'));
     }
-    
 }

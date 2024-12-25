@@ -101,7 +101,7 @@ export default function Chirp({ chirp }) {
                                     <Dropdown.Link
                                         as="button"
                                         href={route(
-                                            "dashboard.admin.chirps.mark",
+                                            "dashboard.admin.chirps.update",
                                             chirp.id
                                         )}
                                         method="put"
@@ -112,7 +112,7 @@ export default function Chirp({ chirp }) {
                                     <Dropdown.Link
                                         as="button"
                                         href={route(
-                                            "dashboard.admin.chirps.mark",
+                                            "dashboard.admin.chirps.update",
                                             chirp.id
                                         )}
                                         method="put"
@@ -123,7 +123,7 @@ export default function Chirp({ chirp }) {
                                 <Dropdown.Link
                                     className="text-red-600"
                                     as="button"
-                                    href={route("chirps.destroy", chirp.id)}
+                                    href={route("dashboard.admin.chirps.destroy", chirp.id)}
                                     method="delete"
                                 >
                                     Delete
