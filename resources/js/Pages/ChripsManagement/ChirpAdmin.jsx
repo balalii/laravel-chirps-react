@@ -1,31 +1,19 @@
-import React, { useState } from 'react';
-import Dropdown from '@/Components/Dropdown';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
+import React, { useState } from "react";
+import Dropdown from "@/Components/Dropdown";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
 import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, usePage } from '@inertiajs/react';
-import WysiwygEditor from './WysiwygEditor';
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useForm, usePage } from "@inertiajs/react";
+import WysiwygEditor from "@/Components/WysiwygEditor";
+import { Flag, MessageCircleWarning, Pin } from "lucide-react";
 
 dayjs.extend(relativeTime);
 
 export default function Chirp({ chirp }) {
-    // console.log(chirp);
+    console.log(chirp);
 
     const { auth } = usePage().props;
-
-    const [editing, setEditing] = useState(false);
-
-    const { data, setData, patch, clearErrors, reset, errors } = useForm({
-        message: chirp.message,
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-        patch(route("chirps.update", chirp.id), {
-            onSuccess: () => setEditing(false),
-        });
-    };
 
     const renderMedia = (mediaPath, mediaType) => {
         if (!mediaPath) return null;
@@ -71,6 +59,7 @@ export default function Chirp({ chirp }) {
                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
             </svg>
+
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <div>
@@ -85,7 +74,15 @@ export default function Chirp({ chirp }) {
                             </small>
                         )}
                     </div>
-                    {chirp.user.id === auth.user.id && (
+
+                    <div className="flex items-center space-x-4">
+                        {chirp.marked === 1 && (
+                            <div
+                                className={`px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 flex items-center space-x-2`}
+                            >
+                                <span>Marked</span> <Pin width={15} />
+                            </div>
+                        )}
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <button>
@@ -100,12 +97,29 @@ export default function Chirp({ chirp }) {
                                 </button>
                             </Dropdown.Trigger>
                             <Dropdown.Content>
-                                <button
-                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                    onClick={() => setEditing(true)}
-                                >
-                                    Edit
-                                </button>
+                                {chirp.marked === 1 ? (
+                                    <Dropdown.Link
+                                        as="button"
+                                        href={route(
+                                            "dashboard.admin.chirps.mark",
+                                            chirp.id
+                                        )}
+                                        method="put"
+                                    >
+                                        Remove Mark
+                                    </Dropdown.Link>
+                                ) : (
+                                    <Dropdown.Link
+                                        as="button"
+                                        href={route(
+                                            "dashboard.admin.chirps.mark",
+                                            chirp.id
+                                        )}
+                                        method="put"
+                                    >
+                                        Mark
+                                    </Dropdown.Link>
+                                )}
                                 <Dropdown.Link
                                     className="text-red-600"
                                     as="button"
@@ -116,42 +130,26 @@ export default function Chirp({ chirp }) {
                                 </Dropdown.Link>
                             </Dropdown.Content>
                         </Dropdown>
-                    )}
-                </div>
-
-                {editing ? (
-                    <form onSubmit={submit} encType="multipart/form-data">
-                        <WysiwygEditor
-                            value={data.message}
-                            onChange={(value) => setData("message", value)}
-                        />
-                        <InputError message={errors.message} className="mt-2" />
-
-                        <div className="space-x-2 mt-4">
-                            <PrimaryButton>Save</PrimaryButton>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setEditing(false);
-                                    reset();
-                                    clearErrors();
-                                    setPreviewMedia(null);
-                                }}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <div>
-                        <div
-                            className="mt-4 text-lg text-gray-900"
-                            dangerouslySetInnerHTML={{ __html: chirp.message }}
-                        />
-                        {chirp.media_path &&
-                            renderMedia(chirp.media_path, chirp.media_type)}
                     </div>
-                )}
+                </div>
+                {/* 
+                <div className="w-full flex justify-end">
+                    {chirp.marked === 1 && (
+                        <div
+                            className={`px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 flex items-center space-x-2`}
+                        >
+                            <span>Marked</span> <Pin width={15} />
+                        </div>
+                    )}
+                </div> */}
+                <div>
+                    <div
+                        className="mt-4 text-lg text-gray-900"
+                        dangerouslySetInnerHTML={{ __html: chirp.message }}
+                    />
+                    {chirp.media_path &&
+                        renderMedia(chirp.media_path, chirp.media_type)}
+                </div>
             </div>
         </div>
     );

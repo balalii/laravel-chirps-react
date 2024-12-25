@@ -41,6 +41,16 @@ export default function Authenticated({ user, header, children }) {
                                         >
                                             Users
                                         </NavLink>
+                                        <NavLink
+                                            href={route(
+                                                "dashboard.admin.chirps.index"
+                                            )}
+                                            active={route().current(
+                                                "dashboard.admin.chirps.index"
+                                            )}
+                                        >
+                                            Chrips Management
+                                        </NavLink>
                                     </>
                                 )}
 
