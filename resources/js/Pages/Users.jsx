@@ -72,8 +72,8 @@ export default function Users({ auth, users }) {
                         <Table.Head>
                             <Table.HeadCell>Name</Table.HeadCell>
                             <Table.HeadCell>Email</Table.HeadCell>
-                            <Table.HeadCell>Role</Table.HeadCell>
                             <Table.HeadCell>Chirps Count</Table.HeadCell>
+                            <Table.HeadCell>Role</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Actions</Table.HeadCell>
                         </Table.Head>
