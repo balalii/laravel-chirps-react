@@ -110,14 +110,5 @@ class ChirpController extends Controller
             ]
         );
         return redirect(route('chirps.index'));
-        Report::create([
-            'reporter_id' => $request->user()->id(),
-            'reason' => $validated['reason'],
-            'detail' => $validated['detail'],
-            'reported_id' => $chirp->id,
-            'reported_type' => Chirp::class,
-        ]);
-
-        return redirect(route('chirps.index'));
     }
 }
