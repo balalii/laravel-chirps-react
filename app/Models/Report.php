@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ReportCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,10 @@ class Report extends Model
         'detail', // string
         'reported_id', // int
         'reported_type', // string
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => ReportCreated::class,
     ];
 
     /**
