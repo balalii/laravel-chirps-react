@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Dropdown from '@/Components/Dropdown';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
+import React, { useState } from "react";
+import Dropdown from "@/Components/Dropdown";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
 import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, usePage } from '@inertiajs/react';
-import WysiwygEditor from './WysiwygEditor';
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useForm, usePage } from "@inertiajs/react";
+import WysiwygEditor from "./WysiwygEditor";
 
 dayjs.extend(relativeTime);
 
@@ -25,6 +25,15 @@ export default function Chirp({ chirp }) {
         patch(route("chirps.update", chirp.id), {
             onSuccess: () => setEditing(false),
         });
+    };
+
+    const { post: postReport } = useForm({
+        reason: "this man is toxic",
+        detail: "he's saying inappropriate word to my mom",
+    });
+
+    const report = (e) => {
+        postReport(route("chirps.report", chirp.id));
     };
 
     const renderMedia = (mediaPath, mediaType) => {
@@ -85,38 +94,48 @@ export default function Chirp({ chirp }) {
                             </small>
                         )}
                     </div>
-                    {chirp.user.id === auth.user.id && (
-                        <Dropdown>
-                            <Dropdown.Trigger>
-                                <button>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-4 w-4 text-gray-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                    </svg>
-                                </button>
-                            </Dropdown.Trigger>
-                            <Dropdown.Content>
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <button>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4 text-gray-400"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Content>
+                            {chirp.user.id !== auth.user.id && (
                                 <button
                                     className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                    onClick={() => setEditing(true)}
+                                    onClick={report}
                                 >
-                                    Edit
+                                    Report
                                 </button>
-                                <Dropdown.Link
-                                    className="text-red-600"
-                                    as="button"
-                                    href={route("chirps.destroy", chirp.id)}
-                                    method="delete"
-                                >
-                                    Delete
-                                </Dropdown.Link>
-                            </Dropdown.Content>
-                        </Dropdown>
-                    )}
+                            )}
+                            {chirp.user.id === auth.user.id && (
+                                <>
+                                    <button
+                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        onClick={() => setEditing(true)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <Dropdown.Link
+                                        className="text-red-600"
+                                        as="button"
+                                        href={route("chirps.destroy", chirp.id)}
+                                        method="delete"
+                                    >
+                                        Delete
+                                    </Dropdown.Link>
+                                </>
+                            )}
+                        </Dropdown.Content>
+                    </Dropdown>
                 </div>
 
                 {editing ? (
