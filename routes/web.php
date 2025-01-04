@@ -7,7 +7,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Models\Chirp;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +29,14 @@ Route::middleware('auth')->group(function () {
 Route::resource('chirps', ChirpController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::post("/chirps/{chirp}/report", [ChirpController::class, 'report'])
+    ->middleware(['auth', 'verified'])
+    ->name("chirps.report");
+
+Route::post("/user/{user}/report", [ProfileController::class, 'report'])
+    ->middleware(['auth', 'verified'])
+    ->name("user.report");
 
 Route::resource('dashboard', DashboardController::class)
     ->only(['index'])

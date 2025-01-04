@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Report;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,5 +61,23 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function report(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'reason' => 'required|string|max:255',
+            'detail' => 'nullable|string',
+        ]);
+
+        Report::create([
+            'reporter_id' => $request->user()->id(),
+            'reason' => $validated['reason'],
+            'detail' => $validated['detail'],
+            'reported_id' => $user->id,
+            'reported_type' => User::class,
+        ]);
+
+        return Redirect::to(route("chirps.index"));
     }
 }
