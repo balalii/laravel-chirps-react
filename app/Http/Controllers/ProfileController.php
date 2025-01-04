@@ -70,13 +70,14 @@ class ProfileController extends Controller
             'detail' => 'nullable|string',
         ]);
 
-        Report::create([
-            'reporter_id' => $request->user()->id(),
-            'reason' => $validated['reason'],
-            'detail' => $validated['detail'],
-            'reported_id' => $user->id,
-            'reported_type' => User::class,
-        ]);
+        $request->user()->reports()->create(
+            [
+                'reason' => $validated['reason'],
+                'detail' => $validated['detail'],
+                'reported_id' => $user->id,
+                'reported_type' => User::class,
+            ]
+        );
 
         return Redirect::to(route("chirps.index"));
     }

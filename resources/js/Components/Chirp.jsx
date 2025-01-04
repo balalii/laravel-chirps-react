@@ -27,13 +27,21 @@ export default function Chirp({ chirp }) {
         });
     };
 
-    const { post: postReport } = useForm({
+    const { post: postChirpReport } = useForm({
+        reason: "this chirp is toxic",
+        detail: "he's saying inappropriate word to my mom",
+    });
+
+    const reportChirp = (e) => {
+        postChirpReport(route("chirps.report", chirp.id));
+    };
+    const { post: postUserReport } = useForm({
         reason: "this man is toxic",
         detail: "he's saying inappropriate word to my mom",
     });
 
-    const report = (e) => {
-        postReport(route("chirps.report", chirp.id));
+    const reportUser = (e) => {
+        postUserReport(route("user.report", chirp.user.id));
     };
 
     const renderMedia = (mediaPath, mediaType) => {
@@ -109,12 +117,20 @@ export default function Chirp({ chirp }) {
                         </Dropdown.Trigger>
                         <Dropdown.Content>
                             {chirp.user.id !== auth.user.id && (
-                                <button
-                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                    onClick={report}
-                                >
-                                    Report
-                                </button>
+                                <>
+                                    <button
+                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        onClick={reportChirp}
+                                    >
+                                        Report Chirp
+                                    </button>
+                                    <button
+                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        onClick={reportUser}
+                                    >
+                                        Report User
+                                    </button>
+                                </>
                             )}
                             {chirp.user.id === auth.user.id && (
                                 <>

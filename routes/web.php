@@ -5,6 +5,7 @@ use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ChirpManagerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportManagerController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
@@ -50,6 +51,8 @@ Route::prefix('dashboard/admin')
         Route::resource('users', UserManagerController::class)
             ->only(['index', 'update', 'destroy']);
         Route::resource('chirps', ChirpManagerController::class)
+            ->only(['index', 'destroy', 'update']);
+        Route::resource('report', ReportManagerController::class)
             ->only(['index', 'destroy', 'update']);
     });
 
