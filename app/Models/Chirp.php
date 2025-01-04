@@ -21,4 +21,9 @@ class Chirp extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function reports()
+    {
+        return $this->morphMany(Report::class, 'reported');
+    }
 }
