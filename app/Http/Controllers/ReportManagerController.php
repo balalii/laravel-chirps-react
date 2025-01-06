@@ -15,7 +15,7 @@ class ReportManagerController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Users", ['reports' => Report::with('reporter')->with('reported')->get()->all()]);
+        return Inertia::render("Report/Index", ['reports' => Report::with('reporter')->with('reported')->get()->all()]);
     }
 
     /**

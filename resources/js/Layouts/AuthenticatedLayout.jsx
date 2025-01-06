@@ -4,6 +4,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
+import { DATA_URL_ADMIN } from "./DATA_URL_ADMIN";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -31,26 +32,17 @@ export default function Authenticated({ user, header, children }) {
 
                                 {user.role === "admin" && (
                                     <>
-                                        <NavLink
-                                            href={route(
-                                                "dashboard.admin.users.index"
-                                            )}
-                                            active={route().current(
-                                                "dashboard.admin.users.index"
-                                            )}
-                                        >
-                                            Users
-                                        </NavLink>
-                                        <NavLink
-                                            href={route(
-                                                "dashboard.admin.chirps.index"
-                                            )}
-                                            active={route().current(
-                                                "dashboard.admin.chirps.index"
-                                            )}
-                                        >
-                                            Chrips Management
-                                        </NavLink>
+                                        {DATA_URL_ADMIN.map((data, idx) => (
+                                            <NavLink
+                                                key={idx}
+                                                href={route(data.path)}
+                                                active={route().current(
+                                                    data.path
+                                                )}
+                                            >
+                                                {data.name}
+                                            </NavLink>
+                                        ))}
                                     </>
                                 )}
 

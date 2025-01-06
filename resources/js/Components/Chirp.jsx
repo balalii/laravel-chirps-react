@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
 import WysiwygEditor from "./WysiwygEditor";
+import { CircleUserRound, MessageCircleWarning } from "lucide-react";
 
 dayjs.extend(relativeTime);
 
@@ -119,16 +120,24 @@ export default function Chirp({ chirp }) {
                             {chirp.user.id !== auth.user.id && (
                                 <>
                                     <button
-                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        className=" w-full flex items-center text-red-600 px-4 py-2 text-left text-sm leading-5  hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
                                         onClick={reportChirp}
                                     >
-                                        Report Chirp
+                                        <MessageCircleWarning
+                                            size={27}
+                                            className="pr-2"
+                                        />{" "}
+                                        Report chirp
                                     </button>
                                     <button
-                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        className=" w-full flex items-center text-red-600 px-4 py-2 text-left text-sm leading-5  hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
                                         onClick={reportUser}
                                     >
-                                        Report User
+                                        <CircleUserRound
+                                            size={27}
+                                            className="pr-2"
+                                        />{" "}
+                                        Report user
                                     </button>
                                 </>
                             )}
