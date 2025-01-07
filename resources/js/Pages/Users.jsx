@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
 import { Table, Button, Modal, TextInput, Select, Alert } from "flowbite-react";
-import { AlertCircle, Edit, Trash } from "lucide-react";
+import { AlertCircle, Edit, Settings, Trash } from "lucide-react";
 
 export default function Users({ auth, users }) {
     const [showModal, setShowModal] = useState(false);
@@ -115,8 +115,8 @@ export default function Users({ auth, users }) {
                                                         handleEdit(user)
                                                     }
                                                 >
-                                                    <Edit className="mr-2 h-4 w-4" />
-                                                    Edit
+                                                    <Settings className="mr-2 h-4 w-4" />
+                                                    Settings
                                                 </Button>
                                                 <Button
                                                     color="red"
@@ -137,7 +137,7 @@ export default function Users({ auth, users }) {
                 </div>
 
                 <Modal show={showModal} onClose={() => setShowModal(false)}>
-                    <Modal.Header>Edit User</Modal.Header>
+                    <Modal.Header>Setting User</Modal.Header>
                     <Modal.Body>
                         <form onSubmit={handleUpdate} className="space-y-5">
                             <div className="grid grid-cols-4 space-x-5">
@@ -183,7 +183,7 @@ export default function Users({ auth, users }) {
                                 </div>
                             </div>
                             <Button type="submit" disabled={processing}>
-                                Update User
+                                Save
                             </Button>
                         </form>
                     </Modal.Body>
