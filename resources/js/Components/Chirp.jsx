@@ -6,7 +6,13 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
 import WysiwygEditor from "./WysiwygEditor";
-import { CircleUserRound, MessageCircleWarning } from "lucide-react";
+import {
+    CircleUserRound,
+    MessageCircleWarning,
+    PencilLine,
+    Trash,
+} from "lucide-react";
+import ReportModal from "./ReportModal";
 
 dayjs.extend(relativeTime);
 
@@ -26,23 +32,6 @@ export default function Chirp({ chirp }) {
         patch(route("chirps.update", chirp.id), {
             onSuccess: () => setEditing(false),
         });
-    };
-
-    const { post: postChirpReport } = useForm({
-        reason: "this chirp is toxic",
-        detail: "he's saying inappropriate word to my mom",
-    });
-
-    const reportChirp = (e) => {
-        postChirpReport(route("chirps.report", chirp.id));
-    };
-    const { post: postUserReport } = useForm({
-        reason: "this man is toxic",
-        detail: "he's saying inappropriate word to my mom",
-    });
-
-    const reportUser = (e) => {
-        postUserReport(route("user.report", chirp.user.id));
     };
 
     const renderMedia = (mediaPath, mediaType) => {
@@ -119,34 +108,26 @@ export default function Chirp({ chirp }) {
                         <Dropdown.Content>
                             {chirp.user.id !== auth.user.id && (
                                 <>
-                                    <button
-                                        className=" w-full flex items-center text-red-600 px-4 py-2 text-left text-sm leading-5  hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                        onClick={reportChirp}
-                                    >
-                                        <MessageCircleWarning
-                                            size={27}
-                                            className="pr-2"
-                                        />{" "}
-                                        Report chirp
-                                    </button>
-                                    <button
-                                        className=" w-full flex items-center text-red-600 px-4 py-2 text-left text-sm leading-5  hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
-                                        onClick={reportUser}
-                                    >
-                                        <CircleUserRound
-                                            size={27}
-                                            className="pr-2"
-                                        />{" "}
-                                        Report user
-                                    </button>
+                                    <ReportModal
+                                        type="chirp"
+                                        targetId={chirp.id}
+                                    />
+                                    <ReportModal
+                                        type="user"
+                                        targetId={chirp.user.id}
+                                    />
                                 </>
                             )}
                             {chirp.user.id === auth.user.id && (
                                 <>
                                     <button
-                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        className="flex items-center w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
                                         onClick={() => setEditing(true)}
                                     >
+                                        <PencilLine
+                                            size={25}
+                                            className="pr-2"
+                                        />
                                         Edit
                                     </button>
                                     <Dropdown.Link
@@ -155,7 +136,10 @@ export default function Chirp({ chirp }) {
                                         href={route("chirps.destroy", chirp.id)}
                                         method="delete"
                                     >
-                                        Delete
+                                        <span className="flex items-center">
+                                            <Trash size={25} className="pr-2" />
+                                            Delete
+                                        </span>
                                     </Dropdown.Link>
                                 </>
                             )}

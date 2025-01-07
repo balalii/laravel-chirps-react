@@ -21,6 +21,6 @@ class AdminMiddleware
         }
 
         // Redirect or deny access if not admin
-        return redirect(route('dashboard'))->with('error', 'Access denied. Admins only.');
+        return redirect(route('chirps.index'))->with('error', 'Access denied. Admins only.');
     }
 }

@@ -97,7 +97,7 @@ export default function Users({ auth, users }) {
                                         <Table.Cell>{user.role}</Table.Cell>
                                         <Table.Cell>
                                             <span
-                                                className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                                className={`px-2 py-1 rounded-full text-xs font-semibold capitalize ${
                                                     user.status === "active"
                                                         ? "bg-green-100 text-green-800"
                                                         : "bg-red-100 text-red-800"
@@ -119,7 +119,7 @@ export default function Users({ auth, users }) {
                                                     Edit
                                                 </Button>
                                                 <Button
-                                                    color="failure"
+                                                    color="red"
                                                     size="sm"
                                                     onClick={() =>
                                                         handleDelete(user.id)

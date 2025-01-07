@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useForm, usePage } from "@inertiajs/react";
 import WysiwygEditor from "@/Components/WysiwygEditor";
-import { Flag, MessageCircleWarning, Pin } from "lucide-react";
+import { Flag, MessageCircleWarning, Pin, PinOff, Trash } from "lucide-react";
 
 dayjs.extend(relativeTime);
 
@@ -105,7 +105,9 @@ export default function Chirp({ chirp }) {
                                             chirp.id
                                         )}
                                         method="put"
+                                        className="flex items-center"
                                     >
+                                        <PinOff size={25} className="pr-2" />
                                         Remove Mark
                                     </Dropdown.Link>
                                 ) : (
@@ -116,17 +118,25 @@ export default function Chirp({ chirp }) {
                                             chirp.id
                                         )}
                                         method="put"
+                                        className="flex items-center"
                                     >
+                                        <Pin size={25} className="pr-2" />
                                         Mark
                                     </Dropdown.Link>
                                 )}
                                 <Dropdown.Link
                                     className="text-red-600"
                                     as="button"
-                                    href={route("dashboard.admin.chirps.destroy", chirp.id)}
+                                    href={route(
+                                        "dashboard.admin.chirps.destroy",
+                                        chirp.id
+                                    )}
                                     method="delete"
                                 >
-                                    Delete
+                                    <span className="flex items-center">
+                                        <Trash size={25} className="pr-2" />
+                                        Delete
+                                    </span>
                                 </Dropdown.Link>
                             </Dropdown.Content>
                         </Dropdown>
