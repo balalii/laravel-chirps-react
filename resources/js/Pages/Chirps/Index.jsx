@@ -57,22 +57,22 @@ export default function Index({ auth, chirps }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Chirps" />
- 
+
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <form onSubmit={submit}>
-                 <div className='p-3 bg-white rounded-md'>
-                    <p>Caption:</p>
-                       <WysiwygEditor 
-                        value={data.message} 
-                        onChange={(value) => setData('message', value)} 
-                    />
-                 </div>
+                    <div className="p-3 bg-white rounded-md">
+                        <p>What do you think {auth.user.name}?</p>
+                        <WysiwygEditor
+                            value={data.message}
+                            onChange={(value) => setData("message", value)}
+                        />
+                    </div>
                     <InputError message={errors.message} className="mt-2" />
-                    
+
                     {/* Input File */}
                     <div className="mt-4">
-                        <input 
-                            type="file" 
+                        <input
+                            type="file"
                             accept="image/*,video/*"
                             onChange={handleMediaChange}
                             className="block w-full text-sm text-gray-500 
@@ -88,20 +88,20 @@ export default function Index({ auth, chirps }) {
                     {/* Pratinjau Media */}
                     {mediaPreview && (
                         <div className="mt-4 relative">
-                            {mediaPreview.type.startsWith('image/') ? (
-                                <img 
-                                    src={mediaPreview.url} 
-                                    alt="Media Preview" 
+                            {mediaPreview.type.startsWith("image/") ? (
+                                <img
+                                    src={mediaPreview.url}
+                                    alt="Media Preview"
                                     className="max-w-full h-auto rounded-lg"
                                 />
                             ) : (
-                                <video 
-                                    src={mediaPreview.url} 
-                                    controls 
+                                <video
+                                    src={mediaPreview.url}
+                                    controls
                                     className="max-w-full h-auto rounded-lg"
                                 />
                             )}
-                            <button 
+                            <button
                                 type="button"
                                 onClick={clearMedia}
                                 className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full"
@@ -111,18 +111,15 @@ export default function Index({ auth, chirps }) {
                         </div>
                     )}
 
-                    <PrimaryButton 
-                        className="mt-4" 
-                        disabled={processing}
-                    >
+                    <PrimaryButton className="mt-4" disabled={processing}>
                         Upload
                     </PrimaryButton>
                 </form>
 
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
-                    {chirps.map(chirp =>
+                    {chirps.map((chirp) => (
                         <Chirp key={chirp.id} chirp={chirp} />
-                    )}
+                    ))}
                 </div>
             </div>
         </AuthenticatedLayout>
