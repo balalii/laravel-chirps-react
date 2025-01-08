@@ -30,13 +30,11 @@ export default function ChripsReport({ reports }) {
                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
                         <Table.Cell className="  text-gray-900 dark:text-white !italic flex flex-wrap">
-                            {`"`}
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html: data.reported.message,
                                 }}
                             />
-                            {`"`}
                         </Table.Cell>
                         <Table.Cell className="whitespace-nowrap  text-gray-900 dark:text-white">
                             {data.reason}
