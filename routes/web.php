@@ -44,6 +44,10 @@ Route::resource('dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('index', 'dashboard');
 
+Route::get('/dashboard/totaldata', [DashboardController::class, 'get_data'])
+    ->middleware(['auth', 'verified', AdminMiddleware::class])
+    ->name('dashboard.getdata');
+
 Route::prefix('dashboard/admin')
     ->name("dashboard.admin.")
     ->middleware(['auth', 'verified', AdminMiddleware::class])
