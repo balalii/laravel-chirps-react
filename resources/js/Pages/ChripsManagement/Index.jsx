@@ -8,11 +8,11 @@ export default function Index({ auth, chirps }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Chrips Management
+                    Chirps Management
                 </h2>
             }
         >
-            <Head title="Chrips Management" />
+            <Head title="Chirps Management" />
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">

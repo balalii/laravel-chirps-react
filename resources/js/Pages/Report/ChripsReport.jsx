@@ -51,9 +51,10 @@ export default function ChripsReport({ reports }) {
                                     color="red"
                                     size="sm"
                                     onClick={() => actionReport(data.id)}
+                                    className="flex items-center whitespace-nowrap"
                                 >
                                     <Trash className="mr-2 h-4 w-4" />
-                                    Delete
+                                    Delete Chirp
                                 </Button>
                             </div>
                         </Table.Cell>

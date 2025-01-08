@@ -13,13 +13,13 @@ export default function Index({ auth, reports }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Chrips Management" />
+            <Head title="Chirps Management" />
 
             <div className="px-10 bg-white min-h-screen ">
                 <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-7">
                     <div className="overflow-x-auto pt-5 px-1">
                         <Tabs aria-label="Full width tabs">
-                            <Tabs.Item active title="Chrips report" icon={Bird}>
+                            <Tabs.Item active title="Chirps report" icon={Bird}>
                                 <ChripsReport
                                     reports={reports.filter(
                                         (data) => !data.reported.email

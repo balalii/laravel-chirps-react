@@ -49,7 +49,7 @@ export default function AccountReport({ reports }) {
                                     onClick={() => actionReport(data.id)}
                                 >
                                     <Ban className="mr-2 h-4 w-4" />
-                                    Banned {data.id}
+                                    Banned
                                 </Button>
                             </div>
                         </Table.Cell>

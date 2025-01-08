@@ -147,7 +147,7 @@ export default function Dashboard({ auth }) {
                                     ],
                                     datasets: [
                                         {
-                                            label: "Total Chrips",
+                                            label: "Total Chirps",
                                             backgroundColor: "blue",
                                             data: [
                                                 2112, 2343, 2545, 3123, 2365,
@@ -157,7 +157,7 @@ export default function Dashboard({ auth }) {
                                         {
                                             borderColor: "red",
                                             backgroundColor: "red",
-                                            label: "Total Report Chrips",
+                                            label: "Total Report Chirps",
                                             data: [
                                                 112, 343, 45, 423, 365, 985, 98,
                                             ],
