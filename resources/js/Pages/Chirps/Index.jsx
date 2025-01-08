@@ -7,8 +7,6 @@ import { useForm, Head } from '@inertiajs/react';
 import WysiwygEditor from '@/Components/WysiwygEditor';
  
 export default function Index({ auth, chirps }) {
-    console.log(auth);
-
     const [mediaPreview, setMediaPreview] = useState(null);
     const { data, setData, post, processing, reset, errors } = useForm({
         message: "",
