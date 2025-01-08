@@ -13,7 +13,7 @@ export default function Index({ auth, reports }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Chirps Management" />
+            <Head title="Report Management" />
 
             <div className="px-10 bg-white min-h-screen ">
                 <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-7">
