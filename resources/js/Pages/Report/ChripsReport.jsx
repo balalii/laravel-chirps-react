@@ -54,7 +54,7 @@ export default function ChripsReport({ reports }) {
                                     className="flex items-center whitespace-nowrap"
                                 >
                                     <Trash className="mr-2 h-4 w-4" />
-                                    Delete Chirp
+                                    Delete
                                 </Button>
                             </div>
                         </Table.Cell>
