@@ -50,9 +50,9 @@ class DashboardController extends Controller
         if ($filter == 'Day') {
             return Response::json(
                 [
-                    'users' => User::whereDate('created_at', Carbon::now())->get()->count(),
-                    'chirps' => Chirp::whereDate('created_at', Carbon::now())->get()->count(),
-                    'reports' => Report::whereDate('created_at', Carbon::now())->get()->count(),
+                    'users' => User::whereDate('created_at', Carbon::now())->count(),
+                    'chirps' => Chirp::whereDate('created_at', Carbon::now())->count(),
+                    'reports' => Report::whereDate('created_at', Carbon::now())->count(),
                 ]
             );
         }

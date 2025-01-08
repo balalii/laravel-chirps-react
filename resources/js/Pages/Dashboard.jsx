@@ -125,6 +125,11 @@ export default function Dashboard({ auth, users, chirps, reports, weekly }) {
                                 >
                                     Day
                                 </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handleFilterClick(null)}
+                                >
+                                    None
+                                </Dropdown.Item>
                             </Dropdown>
                         </div>
                     </div>
