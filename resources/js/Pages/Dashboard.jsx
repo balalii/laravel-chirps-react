@@ -105,7 +105,7 @@ export default function Dashboard({ auth }) {
                                     </p>
                                 </div>
 
-                                <span className="rounded-full bg-gray-100 p-3 text-gray-600">
+                                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
                                     <Bird />
                                 </span>
                             </div>
@@ -156,7 +156,7 @@ export default function Dashboard({ auth }) {
                                         {
                                             borderColor: "red",
                                             backgroundColor: "red",
-                                            label: "Total Report",
+                                            label: "Total Report Chrips",
                                             data: [
                                                 112, 343, 45, 423, 365, 985, 98,
                                             ],
