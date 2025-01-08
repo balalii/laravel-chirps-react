@@ -4,7 +4,7 @@ export const DATA_URL_ADMIN = [
         path: "dashboard",
     },
     {
-        name: "Chrips management",
+        name: "Chirps management",
         path: "dashboard.admin.chirps.index",
     },
     {

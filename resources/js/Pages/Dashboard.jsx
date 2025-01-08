@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import { Button, Datepicker, Dropdown, Modal } from "flowbite-react";
 import { Bird, CircleUserRound, MessageCircleWarning } from "lucide-react";
 import { useState } from "react";
+import { TEChart } from "tw-elements-react";
 
 async function getData(filter) {
     const resp = await fetch(
@@ -32,7 +33,19 @@ export default function Dashboard({ auth, users, chirps, reports }) {
 
     function getGreetingBasedOnTime() {
         const currentHour = currentTime.getHours();
+        function getGreetingBasedOnTime() {
+            const currentHour = currentTime.getHours();
 
+            if (currentHour >= 5 && currentHour < 11) {
+                return "morning";
+            } else if (currentHour >= 11 && currentHour < 15) {
+                return "afternoon";
+            } else if (currentHour >= 15 && currentHour < 21) {
+                return "evening";
+            } else {
+                return "night";
+            }
+        }
         if (currentHour >= 5 && currentHour < 11) {
             return "morning";
         } else if (currentHour >= 11 && currentHour < 15) {
@@ -55,22 +68,14 @@ export default function Dashboard({ auth, users, chirps, reports }) {
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
+            <div className=" pt-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <h2 className="font-medium text-lg">
+                    <h2 className="font-semibold text-xl">
                         Good {getGreetingBasedOnTime()}, {auth.user.name}
                     </h2>
                     <div className="flex space-x-3 justify-end">
                         {/* Date Picker Modal */}
-                        {showDatePicker && (
-                            <Datepicker
-                                onChange={(dt) => {
-                                    getData(dt.toLocaleDateString()).then((v) =>
-                                        setFilterData(v)
-                                    );
-                                }}
-                            />
-                        )}
+                        {showDatePicker && <Datepicker />}
                         <div className="flex justify-end mb-4 ">
                             <Dropdown label={`Filter: ${filter}`}>
                                 <Dropdown.Item
@@ -81,9 +86,9 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                                     Pick Date
                                 </Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => handleFilterClick("Month")}
+                                    onClick={() => handleFilterClick("Monthly")}
                                 >
-                                    Month
+                                    Monthly
                                 </Dropdown.Item>
                                 <Dropdown.Item
                                     onClick={() => handleFilterClick("Week")}
@@ -94,11 +99,6 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                                     onClick={() => handleFilterClick("Day")}
                                 >
                                     Day
-                                </Dropdown.Item>
-                                <Dropdown.Item
-                                    onClick={() => handleFilterClick(null)}
-                                >
-                                    None
                                 </Dropdown.Item>
                             </Dropdown>
                         </div>
@@ -134,7 +134,7 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                                     </p>
                                 </div>
 
-                                <span className="rounded-full bg-gray-100 p-3 text-gray-600">
+                                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
                                     <Bird />
                                 </span>
                             </div>
@@ -157,6 +157,43 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                                 </span>
                             </div>
                         </article>
+                    </div>
+
+                    <div className="bg-white rounded-lg p-10 border mt-5 mx-auto">
+                        <div className=" md:w-3/5 overflow-hidden mx-auto">
+                            <TEChart
+                                type="line"
+                                data={{
+                                    labels: [
+                                        "Monday",
+                                        "Tuesday",
+                                        "Wednesday",
+                                        "Thursday",
+                                        "Friday",
+                                        "Saturday",
+                                        "Sunday",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Total Chirps",
+                                            backgroundColor: "blue",
+                                            data: [
+                                                2112, 2343, 2545, 3123, 2365,
+                                                1985, 987,
+                                            ],
+                                        },
+                                        {
+                                            borderColor: "red",
+                                            backgroundColor: "red",
+                                            label: "Total Report Chirps",
+                                            data: [
+                                                112, 343, 45, 423, 365, 985, 98,
+                                            ],
+                                        },
+                                    ],
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -29,14 +29,12 @@ export default function ChripsReport({ reports }) {
                         key={data.id}
                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
-                        <Table.Cell className="whitespace-nowrap  text-gray-900 dark:text-white !italic flex flex-wrap">
-                            {`"`}
+                        <Table.Cell className="  text-gray-900 dark:text-white !italic flex flex-wrap">
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html: data.reported.message,
                                 }}
                             />
-                            {`"`}
                         </Table.Cell>
                         <Table.Cell className="whitespace-nowrap  text-gray-900 dark:text-white">
                             {data.reason}
@@ -53,6 +51,7 @@ export default function ChripsReport({ reports }) {
                                     color="red"
                                     size="sm"
                                     onClick={() => actionReport(data.id)}
+                                    className="flex items-center whitespace-nowrap"
                                 >
                                     <Trash className="mr-2 h-4 w-4" />
                                     Delete
