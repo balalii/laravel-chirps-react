@@ -52,7 +52,7 @@ export default function Users({ auth, users }) {
                 </h2>
             }
         >
-            <Head title="Dashboard User" />
+            <Head title="User Accounts" />
 
             <div className="py-12">
                 <Head title="Dashboard User" />
