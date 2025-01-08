@@ -9,8 +9,6 @@ import AccountReport from "./AccountReport";
 import ChripsReport from "./ChripsReport";
 
 export default function Index({ auth, reports }) {
-    console.log(reports);
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Chrips Management" />

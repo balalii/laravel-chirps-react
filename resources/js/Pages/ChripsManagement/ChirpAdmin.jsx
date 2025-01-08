@@ -11,8 +11,6 @@ import { Flag, MessageCircleWarning, Pin, PinOff, Trash } from "lucide-react";
 dayjs.extend(relativeTime);
 
 export default function Chirp({ chirp }) {
-    console.log(chirp);
-
     const { auth } = usePage().props;
 
     const renderMedia = (mediaPath, mediaType) => {

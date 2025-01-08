@@ -65,7 +65,6 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                         {showDatePicker && (
                             <Datepicker
                                 onChange={(dt) => {
-                                    console.log(dt.toLocaleDateString());
                                     getData(dt.toLocaleDateString()).then((v) =>
                                         setFilterData(v)
                                     );
