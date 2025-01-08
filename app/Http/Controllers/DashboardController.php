@@ -17,12 +17,28 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        $endDate = Carbon::now();
+        $startDate = $endDate->copy()->subDays(7);
         if ($request->user()->role === 'admin') {
+            $chirpCounts = Chirp::whereBetween('created_at', [$startDate, $endDate])
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get();
+            $reportCounts = Report::whereBetween('created_at', [$startDate, $endDate])
+                ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get();
 
             return Inertia::render('Dashboard', [
                 'users' => User::all()->count(),
                 'chirps' => Chirp::all()->count(),
-                'reports' => Report::all()->count()
+                'reports' => Report::all()->count(),
+                'weekly' => [
+                    'chirps' => $chirpCounts,
+                    'reports' => $reportCounts,
+                ]
             ]);
         }
         return Inertia::render('Dashboard');
@@ -43,22 +59,23 @@ class DashboardController extends Controller
         if ($filter == 'Week') {
             return Response::json(
                 [
-                    'users' => User::all()->where('created_at', '>', Carbon::now()->subDays(7))->count(),
-                    'chirps' => Chirp::all()->where('created_at', '>', Carbon::now()->subDays(7))->count(),
-                    'reports' => Report::all()->where('created_at', '>', Carbon::now()->subDays(7))->count(),
+                    'users' => User::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
+                    'chirps' => Chirp::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
+                    'reports' => Report::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
                 ]
             );
         }
         if ($filter == 'Monthly') {
             return Response::json(
                 [
-                    'users' => User::all()->where('created_at', '>', Carbon::now()->subDays(30))->count(),
-                    'chirps' => Chirp::all()->where('created_at', '>', Carbon::now()->subDays(30))->count(),
-                    'reports' => Report::all()->where('created_at', '>', Carbon::now()->subDays(30))->count(),
+                    'users' => User::where('created_at', '>=', Carbon::now()->subDays(30))->count(),
+                    'chirps' => Chirp::where('created_at', '>=', Carbon::now()->subDays(30))->count(),
+                    'reports' => Report::where('created_at', '>=', Carbon::now()->subDays(30))->count(),
                 ]
             );
         }
         if ($filter) {
+            // NO ERROR HANDLING, THANKS - dot-1x
             $date = Carbon::parse($filter);
             return Response::json(
                 [

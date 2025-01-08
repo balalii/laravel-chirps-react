@@ -11,10 +11,27 @@ async function getData(filter) {
     );
     return await resp.json();
 }
-export default function Dashboard({ auth, users, chirps, reports }) {
+export default function Dashboard({ auth, users, chirps, reports, weekly }) {
+    // f with optimization, we do brute force
+    const statistic = {};
+    weekly.chirps.forEach((v) => {
+        if (!(v.date in statistic)) {
+            statistic[v.date] = {};
+        }
+        if (!statistic[v.date]["chirps"]) {
+            statistic[v.date]["chirps"] = v.count;
+        }
+    });
+    weekly.reports.forEach((v) => {
+        if (!(v.date in statistic)) {
+            statistic[v.date] = {};
+        }
+        if (!statistic[v.date]["reports"]) {
+            statistic[v.date]["reports"] = v.count;
+        }
+    });
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
-
     const [filter, setfilter] = useState("Pick Date");
     const [filterData, setFilterData] = useState({
         users: users || 0,
@@ -75,7 +92,15 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                     </h2>
                     <div className="flex space-x-3 justify-end">
                         {/* Date Picker Modal */}
-                        {showDatePicker && <Datepicker />}
+                        {showDatePicker && (
+                            <Datepicker
+                                onChange={(v) => {
+                                    getData(v.toLocaleDateString()).then((v) =>
+                                        setFilterData(v)
+                                    );
+                                }}
+                            />
+                        )}
                         <div className="flex justify-end mb-4 ">
                             <Dropdown label={`Filter: ${filter}`}>
                                 <Dropdown.Item
@@ -164,31 +189,22 @@ export default function Dashboard({ auth, users, chirps, reports }) {
                             <TEChart
                                 type="line"
                                 data={{
-                                    labels: [
-                                        "Monday",
-                                        "Tuesday",
-                                        "Wednesday",
-                                        "Thursday",
-                                        "Friday",
-                                        "Saturday",
-                                        "Sunday",
-                                    ],
+                                    labels: Object.keys(statistic),
                                     datasets: [
                                         {
                                             label: "Total Chirps",
                                             backgroundColor: "blue",
-                                            data: [
-                                                2112, 2343, 2545, 3123, 2365,
-                                                1985, 987,
-                                            ],
+                                            data: Object.values(statistic).map(
+                                                (v) => v.chirps
+                                            ),
                                         },
                                         {
                                             borderColor: "red",
                                             backgroundColor: "red",
                                             label: "Total Report Chirps",
-                                            data: [
-                                                112, 343, 45, 423, 365, 985, 98,
-                                            ],
+                                            data: Object.values(statistic).map(
+                                                (v) => v.reports
+                                            ),
                                         },
                                     ],
                                 }}

@@ -27,5 +27,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'user',
             'password' => '1234567890'
         ]);
+        $this->call(UserChirpSeeder::class);
     }
 }
