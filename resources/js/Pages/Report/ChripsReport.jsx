@@ -29,7 +29,7 @@ export default function ChripsReport({ reports }) {
                         key={data.id}
                         className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
-                        <Table.Cell className="whitespace-nowrap  text-gray-900 dark:text-white !italic flex flex-wrap">
+                        <Table.Cell className="  text-gray-900 dark:text-white !italic flex flex-wrap">
                             {`"`}
                             <div
                                 dangerouslySetInnerHTML={{
