@@ -6,7 +6,7 @@ import { useState } from "react";
 import { TEChart } from "tw-elements-react";
 
 export default function Dashboard({ auth }) {
-    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(true);
     const [currentTime, setCurrentTime] = useState(new Date());
 
     const [filter, setfilter] = useState("Pick Date");
@@ -14,6 +14,7 @@ export default function Dashboard({ auth }) {
     const handleFilterClick = (filterType) => {
         if (filterType === "Pick Date") {
             setShowDatePicker(true);
+            setfilter(filterType);
         } else {
             setShowDatePicker(false);
             setfilter(filterType);
