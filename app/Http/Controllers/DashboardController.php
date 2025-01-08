@@ -49,7 +49,7 @@ class DashboardController extends Controller
                 ]
             );
         }
-        if ($filter == 'Month') {
+        if ($filter == 'Monthly') {
             return Response::json(
                 [
                     'users' => User::all()->where('created_at', '>', Carbon::now()->subDays(30))->count(),

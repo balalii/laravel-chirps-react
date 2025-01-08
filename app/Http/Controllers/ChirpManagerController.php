@@ -14,7 +14,7 @@ class ChirpManagerController extends Controller
      */
     public function index()
     {
-        return Inertia::render("ChripsManagement/Index", ['chirps' => Chirp::with('user')->get()->all()]);
+        return Inertia::render("ChripsManagement/Index", ['chirps' => Chirp::with('user')->latest()->get()]);
     }
 
     public function update(Request $request, Chirp $chirp)

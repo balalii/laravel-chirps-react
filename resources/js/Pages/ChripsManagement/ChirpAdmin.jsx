@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Dropdown from "@/Components/Dropdown";
-import InputError from "@/Components/InputError";
-import PrimaryButton from "@/Components/PrimaryButton";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useForm, usePage } from "@inertiajs/react";
-import WysiwygEditor from "@/Components/WysiwygEditor";
-import { Flag, MessageCircleWarning, Pin, PinOff, Trash } from "lucide-react";
+import { usePage } from "@inertiajs/react";
+import { Pin, PinOff, Trash } from "lucide-react";
 
 dayjs.extend(relativeTime);
 

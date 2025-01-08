@@ -1,8 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import { Head, useForm } from "@inertiajs/react";
-import { Table, Button, Modal, TextInput, Select, Alert } from "flowbite-react";
-import { AlertCircle, Edit, Settings, Trash } from "lucide-react";
+import { Table, Button, Modal, Select, Alert } from "flowbite-react";
+import { AlertCircle, Settings, Trash } from "lucide-react";
 
 export default function Users({ auth, users }) {
     const [showModal, setShowModal] = useState(false);

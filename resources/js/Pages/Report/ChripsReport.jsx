@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { Table, Button, Modal, TextInput, Select, Alert } from "flowbite-react";
+import { Table, Button } from "flowbite-react";
 import { Trash } from "lucide-react";
 
 export default function ChripsReport({ reports }) {

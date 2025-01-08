@@ -1,10 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { Table, Button, Modal, TextInput, Select, Alert } from "flowbite-react";
 import { Tabs } from "flowbite-react";
 import { Bird, CircleUserRound } from "lucide-react";
-// import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
 import AccountReport from "./AccountReport";
 import ChripsReport from "./ChripsReport";
 
