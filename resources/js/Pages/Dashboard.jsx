@@ -14,22 +14,24 @@ async function getData(filter) {
 export default function Dashboard({ auth, users, chirps, reports, weekly }) {
     // f with optimization, we do brute force
     const statistic = {};
-    weekly.chirps.forEach((v) => {
-        if (!(v.date in statistic)) {
-            statistic[v.date] = {};
-        }
-        if (!statistic[v.date]["chirps"]) {
-            statistic[v.date]["chirps"] = v.count;
-        }
-    });
-    weekly.reports.forEach((v) => {
-        if (!(v.date in statistic)) {
-            statistic[v.date] = {};
-        }
-        if (!statistic[v.date]["reports"]) {
-            statistic[v.date]["reports"] = v.count;
-        }
-    });
+    if (weekly) {
+        weekly.chirps.forEach((v) => {
+            if (!(v.date in statistic)) {
+                statistic[v.date] = {};
+            }
+            if (!statistic[v.date]["chirps"]) {
+                statistic[v.date]["chirps"] = v.count;
+            }
+        });
+        weekly.reports.forEach((v) => {
+            if (!(v.date in statistic)) {
+                statistic[v.date] = {};
+            }
+            if (!statistic[v.date]["reports"]) {
+                statistic[v.date]["reports"] = v.count;
+            }
+        });
+    }
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [filter, setfilter] = useState("Pick Date");
