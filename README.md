@@ -52,4 +52,4 @@ https://docs.google.com/spreadsheets/d/1INqqSmca0M0ILlAZe-QK-s5bpMq6l7JC1hy97dQC
 
 "Yang asal nyomot tanpa contrib skill issue" -dot-1x
 
-"Yang asal nyomot bijinya besar sebelah 🫵" -balalii
+"Yang asal nyomot bijinya besar sebelah" -balalii
