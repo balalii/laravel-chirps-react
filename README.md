@@ -36,9 +36,26 @@ Run serve:
 php artisan serve
 ```
 
+Or artenatively, to run 3 concurrent task, to start `node development`, `artisan server` and `artisan queue:listen`  
+you can use:
+
+```bash
+composer dev
+```
+
 Now you can accses app in: http://127.0.0.1:8000
 
+Access account default:
 
+```bash
+# Admin
+email: admin@localhost.com
+password: 1234567890
+
+# User
+email: user@localhost.com
+password: 1234567890
+```
 
 ## Application reference
 
