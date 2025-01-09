@@ -8,10 +8,22 @@ php composer install
 npm install
 ```
 
-migrate db:
+Set Public Disk:
+
+```bash
+php artisan storage:link
+```
+
+Migrate db:
 
 ```bash
 php artisan migrate:fresh --seed
+```
+
+Run development:
+
+```bash
+npm run dev
 ```
 
 Run serve:
@@ -20,11 +32,9 @@ Run serve:
 php artisan serve
 ```
 
-Run development:
+Now you can accses app in: http://127.0.0.1:8000
 
-```bash
-npm run dev
-```
+
 
 ## Application reference
 
