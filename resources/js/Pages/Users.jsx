@@ -55,7 +55,7 @@ export default function Users({ auth, users }) {
             <Head title="User Accounts" />
 
             <div className="py-12">
-                <Head title="Dashboard User" />
+                <Head title="User Accounts" />
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     {errors.unauthorized && (
                         <Alert

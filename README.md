@@ -1,12 +1,34 @@
 ## Usage
 
-### Start the vite development server to enable instant hot-module replacement while we build our application:
+First,install dep:
 
-npm run dev
+```bash
+php composer install
+# and
+npm install
+```
 
-### Start artisan development server using:
+migrate db:
 
+```bash
+php artisan migrate:fresh --seed
+```
+
+Run serve:
+
+```bash
 php artisan serve
+```
+
+Run development:
+
+```bash
+npm run dev
+```
+
+## Application reference
+
+https://bootcamp.laravel.com/inertia/installation
 
 ## Application requirements
 

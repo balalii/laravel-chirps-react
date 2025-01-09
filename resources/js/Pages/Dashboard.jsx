@@ -50,19 +50,6 @@ export default function Dashboard({ auth, users, chirps, reports, weekly }) {
 
     function getGreetingBasedOnTime() {
         const currentHour = currentTime.getHours();
-        function getGreetingBasedOnTime() {
-            const currentHour = currentTime.getHours();
-
-            if (currentHour >= 5 && currentHour < 11) {
-                return "morning";
-            } else if (currentHour >= 11 && currentHour < 15) {
-                return "afternoon";
-            } else if (currentHour >= 15 && currentHour < 21) {
-                return "evening";
-            } else {
-                return "night";
-            }
-        }
         if (currentHour >= 5 && currentHour < 11) {
             return "morning";
         } else if (currentHour >= 11 && currentHour < 15) {
@@ -85,7 +72,7 @@ export default function Dashboard({ auth, users, chirps, reports, weekly }) {
         >
             <Head title="Dashboard" />
 
-            <div className=" pt-8">
+            <div className="pb-8 pt-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <h2 className="font-semibold text-xl">
                         Good {getGreetingBasedOnTime()}, {auth.user.name}
