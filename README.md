@@ -44,7 +44,8 @@ Access account default:
 # Admin
 email: admin@localhost.com
 password: 1234567890
-# and
+
+# User
 email: user@localhost.com
 password: 1234567890
 ```
