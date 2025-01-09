@@ -38,7 +38,16 @@ php artisan serve
 
 Now you can accses app in: http://127.0.0.1:8000
 
+Access account default:
 
+```bash
+# Admin
+email: admin@localhost.com
+password: 1234567890
+# and
+email: user@localhost.com
+password: 1234567890
+```
 
 ## Application reference
 
