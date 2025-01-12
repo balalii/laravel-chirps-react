@@ -24,7 +24,8 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+        "DB_CONNECTION": "mysql",
+        "DATABASE_URL": "postgresql://postgres.ofcpikxqhjcynfqdxxyx:MnDn7LLm.r9*eys@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
     }
-    
 }
