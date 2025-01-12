@@ -41,7 +41,7 @@ Route::post("/user/{user}/report", [ProfileController::class, 'report'])
 
 Route::resource('dashboard', DashboardController::class)
     ->only(['index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', AdminMiddleware::class])
     ->name('index', 'dashboard');
 
 Route::get('/dashboard/totaldata', [DashboardController::class, 'get_data'])
